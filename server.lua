@@ -9,10 +9,6 @@ local old_resource_manifest = {'resource_manifest_version \'77731fab-63ca-442c-a
                                'resource_manifest_version \'44febabe-d386-4d18-afbe-5e627f4af937\''}
 
 local function fix(s)
-    if s ~= 0 then
-        return
-    end
-
     for resources = 0, GetNumResources() - 1 do
         local name = GetResourceByFindIndex(resources);
 
@@ -81,19 +77,13 @@ local function fix(s)
 end
 
 
-local function show(s)
-    if s ~= 0 then
-        return
-    end
-
+local function show()
     for resources = 0, GetNumResources() - 1 do
         local name = GetResourceByFindIndex(resources);
 
         local __resource = LoadResourceFile(name, '__resource.lua');
-
         local fxmanifest = LoadResourceFile(name, 'fxmanifest.lua');
-
-
+        
         if __resource and fxmanifest then
             print(('[InternalAC-FIX] -> Duplicated resource manifest [%s]. Please remove it'):format(name));
         end
@@ -111,5 +101,8 @@ AddEventHandler('onResourceStart', function (r)
         fix();
         print('[InternalAC-FIX] -> Starting show...');
         show();
+        print('[InternalAC-FIX] -> Done.');
     end
 end)
+
+-- Created by phantumf
